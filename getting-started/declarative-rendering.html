@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Getting Started Vue 2</title>
+</head>
+<body>
+<!-- Rendering déclaratif -->
+<div id="app"> {{ message }}</div>
+
+<!-- Utilisation d'une "directive" grâce au préfix v- -->
+<div id="app-2">
+  <span v-bind:title="message">
+    Hover your mouse over me for a few seconds
+    to see my dynamically bound title!
+  </span>
+</div>
+
+<!-- Condition en Vue JS -->
+<div id="app-3">
+    <span v-if="seen">Si "Seen" vaut {{ seen }} je dois voir ce SPAN</span>
+</div>
+</body>
+
+<!-- Boucle for en Vue JS via une directive -->
+<div id="app-4">
+    <ol>
+        <li v-for="oneTodo in todos">
+            {{ oneTodo.text }}
+        </li>
+    </ol>
+</div>
+<!-- Gestion des interactions utilisateurs -->
+<!-- La directive v-on permet d'attacher un event de type :{typevent} à cet élément HTML -->
+<div id="app-5">
+    <p>{{ message }}</p>
+    <button v-on:click="reverseMessage">Reverse Message</button>
+</div>
+
+<!-- Exemple d'intéraction avec v-model -->
+<div id="app-6">
+    <p>{{ message }}</p>
+    <input v-model="message">
+</div>
+
+<!-- j'importe le script VueJS -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2">
+
+</script>
+
+<script>
+    const app = new Vue({
+        el: "#app",
+        data: {
+            message:"Getting started Vue 2"
+        }
+    })
+
+    const app2 = new Vue({
+        el: '#app-2',
+        data: {
+            message: 'You loaded this page on ' + new Date().toLocaleString()
+        }
+    })
+    const app3 = new Vue({
+        el: '#app-3',
+        data: {
+            seen: true
+        }
+    })
+
+    const app4 = new Vue({
+        el: '#app-4',
+        data: {
+            todos: [
+                { text: 'Learn JavaScript' },
+                { text: 'Learn Vue' },
+                { text: 'Build something awesome' }
+            ]
+        }
+    })
+    const app5 = new Vue({
+        el: '#app-5',
+        data: {
+            message: 'Hello Vue.js!'
+        },
+        methods: {
+            reverseMessage: function () {
+                this.message = this.message.split('').reverse().join('')
+            }
+        }
+    })
+
+    const app6 = new Vue({
+        el: '#app-6',
+        data: {
+            message: 'Hello Vue!'
+        }
+    })
+</script>
+</html>
