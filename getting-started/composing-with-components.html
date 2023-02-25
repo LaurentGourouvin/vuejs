@@ -8,11 +8,19 @@
 <div id="app">
     <div>
         <ol>
+            <!-- Syntaxe de base -->
             <users-list
                 v-for="oneUser in usersList"
                 v-bind:user="oneUser"
                 v-bind:key="oneUser.id"
             ></users-list>
+
+            <!-- Syntaxe raccourcie -->
+            <fruits-list
+                v-for="fruit in fruitsList"
+                :fruit="fruit"
+                :key="fruit.id"
+            ></fruits-list>
         </ol>
     </div>
 </div>
@@ -22,9 +30,13 @@
 
     Vue.component('users-list', {
         props: ['user'],
-        template: '<li>ID: {{ user.id }} Nom: {{ user.firstname }} Prénom: {{ user.lastname }}</li>'
+        template: '<li>ID: {{ user.id }} Nom: {{ user.firstname }} Prénom: {{ user.lastname }} </li>'
     })
 
+    Vue.component('fruits-list', {
+        props: ['fruit'],
+        template: '<li>ID: {{ fruit.id }} Nom du fruit: {{ fruit.name }} </li>'
+    })
     const app = new Vue({
         el: "#app",
         data: {
@@ -32,7 +44,12 @@
                 {id: 1, firstname: "John", lastname: "Doe"},
                 {id: 2, firstname: "Will", lastname: "Smith"},
                 {id: 3, firstname: "Denzel", lastname: "Washington"}
-            ]
+            ],
+            fruitsList: [
+                {id: 1, name: "Tomatoes"},
+                {id: 2, name: "Strawberry"},
+                {id: 3, name: "Banana"}
+            ],
         }
     })
 </script>
