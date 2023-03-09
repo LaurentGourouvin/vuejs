@@ -4,10 +4,10 @@
       <v-card id="card" elevation="12">
         <div id="card_flex">
           <v-card-title id="card_flex--title">Todolist VueJS</v-card-title>
-          <v-form>
+          <v-form @submit.prevent>
             <section id="formulaire">
-              <v-text-field label="Ajouter une tâche"></v-text-field>
-              <v-btn>Enregistrer</v-btn>
+              <v-text-field label="Ajouter une tâche" v-model="newTodo"></v-text-field>
+              <v-btn @click="addTodos">Enregistrer</v-btn>
             </section>
           </v-form>
         </div>
@@ -37,8 +37,13 @@ export default {
     todos: TODOS,
     todosInProgress: null,
     todosDone: null,
+    newTodo: "",
   }),
   methods: {
+    addTodos() {
+      this.todosInProgress.push({ id: 0, text: this.newTodo, status: true });
+      this.newTodo = "";
+    },
     getTodosInProgress() {
       const todosInProgress = _.cloneDeep(this.todos);
       return todosInProgress.filter((todos) => todos.status === true);
