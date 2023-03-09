@@ -4,6 +4,12 @@
       <v-card id="card" elevation="12">
         <div id="card_flex">
           <v-card-title id="card_flex--title">Todolist VueJS</v-card-title>
+          <v-form>
+            <section id="formulaire">
+              <v-text-field label="Ajouter une tâche"></v-text-field>
+              <v-btn>Enregistrer</v-btn>
+            </section>
+          </v-form>
         </div>
         <v-divider></v-divider>
 
@@ -72,11 +78,17 @@ export default {
   gap: 0.75rem;
 }
 #card_flex--title {
-  width: 100%;
-  text-align: center;
   font-size: 24px;
   font-weight: bold;
-  padding: 0.75rem 0;
   font-style: italic;
+}
+#form {
+  display: flex;
+  flex-direction: row;
+}
+#formulaire {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 </style>

@@ -1,6 +1,9 @@
 <template>
   <v-list :color="color">
-    <v-list-item v-for="todo in todos" :key="todo.id">{{ todo.text }}</v-list-item>
+    <v-list-item v-for="todo in todos" :key="todo.id"
+      >{{ todo.text }}
+      <v-checkbox class="todos-checkbox"></v-checkbox>
+    </v-list-item>
   </v-list>
 </template>
 
@@ -15,10 +18,13 @@ export default {
     return {};
   },
   methods: {},
-  mounted() {
-    console.log(this.todos);
-  },
+  mounted() {},
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.todos-checkbox {
+  position: absolute;
+  right: 1rem;
+}
+</style>
