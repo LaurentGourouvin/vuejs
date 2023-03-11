@@ -1,11 +1,30 @@
 <template>
-  <div class="todos-list">
-    <v-list :color="color">
-      <v-list-item v-for="todo in todos" :key="todo.id"
+  <div class="todolist">
+    <v-toolbar title="Tâche en cours" elevation="1" color="#FFF176">
+      Tâche en cours
+    </v-toolbar>
+
+    <div class="todos-list">
+      <v-list :color="color">
+        <v-list-item v-for="(todo) in todosInProgress" :key="todo.id"
         >{{ todo.text }}
-        <v-checkbox class="todos-checkbox"></v-checkbox>
-      </v-list-item>
-    </v-list>
+          <v-checkbox class="todos-checkbox"></v-checkbox>
+        </v-list-item>
+      </v-list>
+    </div>
+
+
+    <v-toolbar title="Tâche terminées" elevation="1" color="#66BB6A">
+      Tâche terminées
+    </v-toolbar>
+    <div class="todos-list">
+      <v-list :color="color">
+        <v-list-item v-for="(todo) in todosDone" :key="todo.id"
+        >{{ todo.text }}
+          <v-checkbox class="todos-checkbox"></v-checkbox>
+        </v-list-item>
+      </v-list>
+    </div>
   </div>
 </template>
 
@@ -14,13 +33,34 @@ export default {
   name: "todos-list",
   props: {
     todos: Array || null,
+    newTodo: String,
     color: String,
   },
   data() {
-    return {};
+    return {
+      todosDone: [],
+      todosInProgress: [],
+    };
   },
-  methods: {},
-  mounted() {},
+  watch: {
+    // Je surveille le changement de ma todosList
+    todos: {
+      handler(){
+        this.todosInProgress = this.filteredTodo(this.todos,true);
+        this.todosDone = this.filteredTodo(this.todos, false);
+      }
+    }
+  },
+  methods: {
+    filteredTodo(list, status){
+      return list.filter((data) => data.status === status)
+    }
+  },
+  mounted() {
+    console.log("TodoList mounted");
+    this.todosInProgress = this.filteredTodo(this.todos, true);
+    this.todosDone = this.filteredTodo(this.todos, false);
+  },
 };
 </script>
 
@@ -29,6 +69,7 @@ export default {
   position: absolute;
   right: 1rem;
 }
+
 .todos-list {
   max-height: 200px;
   overflow-y: auto;
