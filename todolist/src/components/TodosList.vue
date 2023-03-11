@@ -6,9 +6,9 @@
 
     <div class="todos-list">
       <v-list :color="color">
-        <v-list-item v-for="(todo) in todosInProgress" :key="todo.id"
+        <v-list-item class="list-hover" v-for="(todo, index) in todosInProgress" :key="todo.id"
         >{{ todo.text }}
-          <v-checkbox class="todos-checkbox"></v-checkbox>
+          <v-btn class="todos-btn" color="#EF5350" @click="setTodoDone(index)" small>Terminé</v-btn>
         </v-list-item>
       </v-list>
     </div>
@@ -19,9 +19,9 @@
     </v-toolbar>
     <div class="todos-list">
       <v-list :color="color">
-        <v-list-item v-for="(todo) in todosDone" :key="todo.id"
+        <v-list-item class="list-hover" v-for="(todo,index) in todosDone" :key="todo.id"
         >{{ todo.text }}
-          <v-checkbox class="todos-checkbox"></v-checkbox>
+          <v-btn class="todos-btn" color="#388E3C" @click="setTodoInProgress(index)" small>Ré-activer</v-btn>
         </v-list-item>
       </v-list>
     </div>
@@ -48,12 +48,23 @@ export default {
       handler(){
         this.todosInProgress = this.filteredTodo(this.todos,true);
         this.todosDone = this.filteredTodo(this.todos, false);
-      }
-    }
+      },
+      deep: true
+    },
   },
   methods: {
+    setTodoDone(index){
+      this.todosInProgress[index].status = !this.todosInProgress[index].status;
+    },
+    setTodoInProgress(index){
+      this.todosDone[index].status = !this.todosDone[index].status;
+    },
     filteredTodo(list, status){
-      return list.filter((data) => data.status === status)
+      return list
+          .filter((data) => data.status === status)
+          .sort((currentTodo, nextTodo)=>{
+            return nextTodo.createdAt - currentTodo.createdAt
+          })
     }
   },
   mounted() {
@@ -65,9 +76,13 @@ export default {
 </script>
 
 <style scoped>
-.todos-checkbox {
+.todos-btn {
   position: absolute;
   right: 1rem;
+  color: white;
+}
+.list-hover:hover {
+  background: #ECEFF1;
 }
 
 .todos-list {
