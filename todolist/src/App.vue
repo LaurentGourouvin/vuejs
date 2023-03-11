@@ -6,7 +6,13 @@
           <v-card-title id="card_flex--title">Todolist VueJS</v-card-title>
           <v-form @submit.prevent>
             <section id="formulaire">
-              <v-text-field label="Ajouter une tâche" v-model="newTodo"></v-text-field>
+              <v-text-field
+                  type="text"
+                  label="Ajouter une tâche"
+                  v-model="newTodo"
+                  required
+              >
+              </v-text-field>
               <v-btn @click="addTodos">Enregistrer</v-btn>
             </section>
           </v-form>
@@ -36,18 +42,21 @@ export default {
   }),
   methods: {
     addTodos() {
+      if (this.newTodo === "") {
+        return
+      }
       this.currentId++;
       this.todos.push({id: this.currentId, text: this.newTodo, status: true, createdAt: new Date()});
       this.newTodo = "";
     },
-    getMaxId(){
+    getMaxId() {
       let idArray = [];
       for (const todo of this.todos) {
         idArray.push(todo.id)
       }
 
       return Math.max(...idArray);
-    }
+    },
   },
 
   mounted() {
@@ -98,5 +107,7 @@ export default {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  padding: .75rem;
 }
+
 </style>
