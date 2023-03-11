@@ -32,16 +32,27 @@ export default {
   data: () => ({
     todos: TODOS,
     newTodo: "",
+    currentId: 0,
   }),
   methods: {
     addTodos() {
-      this.todos.push({id: 0, text: this.newTodo, status: true});
+      this.currentId++;
+      this.todos.push({id: this.currentId, text: this.newTodo, status: true, createdAt: new Date()});
       this.newTodo = "";
+    },
+    getMaxId(){
+      let idArray = [];
+      for (const todo of this.todos) {
+        idArray.push(todo.id)
+      }
+
+      return Math.max(...idArray);
     }
   },
 
   mounted() {
-
+    console.log("APP.VUE mounted.");
+    this.currentId = this.getMaxId();
   },
 };
 </script>
