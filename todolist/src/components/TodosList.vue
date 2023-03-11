@@ -8,7 +8,7 @@
       <v-list :color="color">
         <v-list-item class="list-hover" v-for="(todo, index) in todosInProgress" :key="todo.id"
         >{{ todo.text }}
-          <v-btn class="todos-btn" color="#EF5350" @click="setTodoDone(index)" small>Terminé</v-btn>
+          <v-btn class="todos-btn" color="#EF5350" @click="setTodoStatusDone(index)" small>Terminé</v-btn>
         </v-list-item>
       </v-list>
     </div>
@@ -21,7 +21,7 @@
       <v-list :color="color">
         <v-list-item class="list-hover" v-for="(todo,index) in todosDone" :key="todo.id"
         >{{ todo.text }}
-          <v-btn class="todos-btn" color="#388E3C" @click="setTodoInProgress(index)" small>Ré-activer</v-btn>
+          <v-btn class="todos-btn" color="#388E3C" @click="setTodoStatusInProgress(index)" small>Ré-activer</v-btn>
         </v-list-item>
       </v-list>
     </div>
@@ -53,10 +53,10 @@ export default {
     },
   },
   methods: {
-    setTodoDone(index){
+    setTodoStatusDone(index){
       this.todosInProgress[index].status = !this.todosInProgress[index].status;
     },
-    setTodoInProgress(index){
+    setTodoStatusInProgress(index){
       this.todosDone[index].status = !this.todosDone[index].status;
     },
     filteredTodo(list, status){
